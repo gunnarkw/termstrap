@@ -1,0 +1,16 @@
+.DS_Store
+*.local
+*.secret
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+id_*
+known_hosts
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+iterm2/private/

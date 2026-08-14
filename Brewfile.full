@@ -1,0 +1,6 @@
+brew "btop"
+brew "dust"
+brew "duf"
+brew "shellcheck"
+cask "iterm2"
+cask "font-jetbrains-mono-nerd-font"
