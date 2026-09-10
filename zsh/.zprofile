@@ -26,3 +26,6 @@ export PATH
 # OrbStack command-line tools and integration (when installed)
 [[ -f "$HOME/.orbstack/shell/init.zsh" ]] &&
   source "$HOME/.orbstack/shell/init.zsh"
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
