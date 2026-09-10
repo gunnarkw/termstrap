@@ -51,6 +51,7 @@ backup_created=false
 for managed_file in \
   "zsh/.zshrc:$HOME/.zshrc" \
   "zsh/.zprofile:$HOME/.zprofile" \
+  "bash/.bashrc:$HOME/.bashrc" \
   "tmux/.tmux.conf:$HOME/.tmux.conf"; do
   source_file="$repo_dir/${managed_file%%:*}"
   destination="${managed_file#*:}"

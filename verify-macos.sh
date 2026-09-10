@@ -26,7 +26,7 @@ for tool in "${required[@]}"; do
   fi
 done
 
-for file in "$HOME/.zshrc" "$HOME/.zprofile" "$HOME/.tmux.conf"; do
+for file in "$HOME/.zshrc" "$HOME/.zprofile" "$HOME/.bashrc" "$HOME/.tmux.conf"; do
   if [[ -L "$file" && -e "$file" ]]; then
     printf '%-12s %s\n' "$(basename "$file")" "linked"
   else
@@ -60,6 +60,11 @@ fi
 
 if ! /bin/zsh -n "$HOME/.zshrc" "$HOME/.zprofile"; then
   echo "Zsh syntax validation failed." >&2
+  failed=1
+fi
+
+if ! /bin/bash -n "$HOME/.bashrc"; then
+  echo "Bash syntax validation failed." >&2
   failed=1
 fi
 

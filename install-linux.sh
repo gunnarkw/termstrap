@@ -291,6 +291,7 @@ run_user() {
 
   link_managed_file "$REPO_DIR/zsh/.zshrc" "$HOME/.zshrc"
   link_managed_file "$REPO_DIR/zsh/.zprofile" "$HOME/.zprofile"
+  link_managed_file "$REPO_DIR/bash/.bashrc" "$HOME/.bashrc"
   link_managed_file "$REPO_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
   install_tmux_plugins
   report_login_shell

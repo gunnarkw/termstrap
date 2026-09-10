@@ -14,6 +14,7 @@ jobs:
         run: |
           bash -n install-macos.sh verify-macos.sh
           bash -n install-linux.sh verify-linux.sh
+          bash -n bash/.bashrc
       - name: ShellCheck
         run: |
           sudo apt-get update

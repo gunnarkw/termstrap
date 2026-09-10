@@ -100,7 +100,7 @@ else
   failures=$((failures + 1))
 fi
 
-for managed_file in "zsh/.zprofile:$HOME/.zprofile" "tmux/.tmux.conf:$HOME/.tmux.conf"; do
+for managed_file in "zsh/.zprofile:$HOME/.zprofile" "bash/.bashrc:$HOME/.bashrc" "tmux/.tmux.conf:$HOME/.tmux.conf"; do
   source_file="$REPO_DIR/${managed_file%%:*}"
   destination="${managed_file#*:}"
   expected="$(readlink -f "$source_file" 2>/dev/null || true)"
@@ -175,6 +175,21 @@ if [[ -n "$zsh_bin" ]]; then
 else
   printf 'FAIL  %-24s zsh missing; skipped syntax, sshk, and shell checks\n' \
     "Zsh checks"
+  failures=$((failures + 1))
+fi
+
+bash_bin="$(command -v bash || true)"
+bashrc_source="$REPO_DIR/bash/.bashrc"
+
+if [[ -n "$bash_bin" ]]; then
+  if "$bash_bin" -n "$HOME/.bashrc"; then
+    printf 'PASS  %-24s valid\n' "Bash syntax"
+  else
+    printf 'FAIL  %-24s invalid; fix %s\n' "Bash syntax" "$bashrc_source"
+    failures=$((failures + 1))
+  fi
+else
+  printf 'FAIL  %-24s bash missing; skipped syntax check\n' "Bash checks"
   failures=$((failures + 1))
 fi
 

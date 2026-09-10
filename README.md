@@ -21,6 +21,9 @@ Two profiles on both platforms:
 ## What it configures
 
 - Fast Zsh prompt, history, completion, autosuggestions, and syntax highlighting
+- A matching terminal title (`user@host: path`, with the Git branch when
+  inside a repository) even while an account's login shell is still bash —
+  see [Bash fallback](#bash-fallback)
 - Portable Homebrew shell initialization for Apple Silicon, Intel macOS, and
   Linuxbrew when it is already installed
 - Shared tmux configuration with TPM-managed session persistence, clipboard,
@@ -258,6 +261,21 @@ git config --global user.email "you@example.com"
 Leave restricted or agent accounts without a personal identity unless they
 genuinely need to create commits. Use a dedicated bot identity if they do.
 
+## Bash fallback
+
+Both installers also link `bash/.bashrc` to `~/.bashrc`. It exists for one
+reason: keeping the terminal title correct on accounts whose login shell
+isn't Zsh yet — most commonly a freshly created Linux `agent` account before
+an administrator runs `chsh`/`usermod -s` (see
+[Separated administrator and agent accounts](#separated-administrator-and-agent-accounts)),
+or any account that intentionally stays on bash. Without it, the terminal
+falls back to whatever title the system's default bash startup files set,
+which on Debian/Ubuntu is often just the hostname with no user.
+
+It sets nothing beyond the title — no prompt, aliases, or history settings —
+and once an account's login shell is Zsh, `zsh/.zshrc`'s `precmd` takes over
+and `~/.bashrc` is never sourced.
+
 ## Update
 
 After pulling repository changes, rerun the same installer (and mode) you used
@@ -286,7 +304,8 @@ Fork the repository when you want different managed defaults:
   arrays at the top of `install-linux.sh`.
 - Pinned versions: the Node.js major version and the nvm installer version
   live near the bottom of `install-macos.sh`.
-- Shell and tmux defaults: `zsh/.zshrc`, `zsh/.zprofile`, `tmux/.tmux.conf`.
+- Shell and tmux defaults: `zsh/.zshrc`, `zsh/.zprofile`, `tmux/.tmux.conf`,
+  `bash/.bashrc`.
 
 If you change the managed tool set, mirror the change in `verify-macos.sh` /
 `verify-linux.sh` so verification keeps telling the truth. CI runs `bash -n`,
